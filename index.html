@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Git 糖果教室 🍬</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600;700&family=Nunito:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="hero">
+    <div class="hero__content">
+      <h1>Git 糖果教室 🍬</h1>
+      <p>甜甜的版本控制入門：Add、Commit、Push、Pull、Revert、Checkout、Merge</p>
+      <div class="hero__actions">
+        <a class="btn primary" href="#" id="downloadZipBtn">下載網頁語法</a>
+        <a class="btn" href="#commands">開始學習</a>
+      </div>
+    </div>
+    <div class="hero__bubble">💖</div>
+    <div class="hero__bubble">🍭</div>
+    <div class="hero__bubble">⭐</div>
+  </header>
+
+  <nav class="tabs" role="tablist" aria-label="Git 指令分類">
+    <button class="tab active" data-tab="basics" role="tab" aria-selected="true">基本操作</button>
+    <button class="tab" data-tab="history" role="tab" aria-selected="false">歷史與回溯</button>
+    <button class="tab" data-tab="branching" role="tab" aria-selected="false">分支與合併</button>
+  </nav>
+
+  <main id="commands">
+    <!-- 基本操作 -->
+    <section class="panel active" data-panel="basics" aria-label="基本操作">
+      <article class="card">
+        <h2>git add 🍡</h2>
+        <p class="desc">把變更加入暫存區（Stage），準備被記錄。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git add .            # 加入所有變更
+git add README.md     # 加入指定檔案
+git add src/          # 加入資料夾</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>用途：</strong>選擇要進入下一次 commit 的檔案。</li>
+            <li><strong>小提醒：</strong>用 <code>git status</code> 看目前哪些檔案已 staged。</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="card">
+        <h2>git commit 🧁</h2>
+        <p class="desc">把暫存區的內容記錄成一次提交（快照）。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git commit -m "feat: 新增會員登入功能"
+git commit -m "fix: 修正資料驗證錯誤"
+git commit -am "chore: 調整 linter 設定"  # -a 同時 add 已追蹤檔案</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>訊息撰寫：</strong>清楚敘述「做了什麼」與「為什麼」。</li>
+            <li><strong>慣例：</strong>可用 <code>feat</code>、<code>fix</code>、<code>docs</code> 等前綴。</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="card">
+        <h2>git push 🍬</h2>
+        <p class="desc">把本地提交推送到遠端（如 GitHub）。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git push origin main
+git push -u origin main   # 設定追蹤，之後可直接 git push</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>先決條件：</strong>需已設定遠端 <code>origin</code> 與分支。</li>
+            <li><strong>衝突：</strong>若遠端有你本地沒有的提交，可能需要先 <code>git pull</code>。</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="card">
+        <h2>git pull 🍓</h2>
+        <p class="desc">抓取遠端更新並合併到本地。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git pull origin main
+git pull --rebase origin main   # 以 rebase 整理歷史</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>差異：</strong><code>pull</code> = fetch + merge（或 rebase）。</li>
+            <li><strong>團隊習慣：</strong>有些團隊偏好 <code>--rebase</code> 以維持線性歷史。</li>
+          </ul>
+        </details>
+      </article>
+    </section>
+
+    <!-- 歷史與回溯 -->
+    <section class="panel" data-panel="history" aria-label="歷史與回溯">
+      <article class="card">
+        <h2>git revert 🍮</h2>
+        <p class="desc">建立一個「反向提交」，用新的提交抵銷指定提交的變更。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git log --oneline            # 找到要還原的 commit
+git revert &lt;commit-hash&gt;      # 產生一個反向提交
+git revert HEAD~2             # 還原倒數第 3 個提交</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>優點：</strong>保留歷史，不會改動既有提交。</li>
+            <li><strong>注意：</strong>與 <code>reset</code> 不同，<code>revert</code> 適合公開分支。</li>
+          </ul>
+        </details>
+      </article>
+
+      <article class="card">
+        <h2>git checkout 🍪</h2>
+        <p class="desc">切換分支或回到某個提交版本；也可檢出檔案。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git checkout -b feature/login   # 建立並切換到新分支
+git checkout main               # 切換到 main
+git checkout &lt;commit-hash&gt;       # 進入分離 HEAD 狀態（僅瀏覽）</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>現代用法：</strong>推薦使用 <code>git switch</code>（切分支）與 <code>git restore</code>（還原檔案）。</li>
+            <li><strong>安全：</strong>分離 HEAD 狀態下的修改若要保留，請建立分支。</li>
+          </ul>
+        </details>
+      </article>
+    </section>
+
+    <!-- 分支與合併 -->
+    <section class="panel" data-panel="branching" aria-label="分支與合併">
+      <article class="card">
+        <h2>git merge 🍯</h2>
+        <p class="desc">把另一個分支的變更合併到目前分支。</p>
+        <details>
+          <summary>展開語法與範例</summary>
+          <div class="code">
+<pre><code>git checkout main
+git merge feature/login       # 合併 feature/login 到 main
+# 若發生衝突，修正檔案後：
+git add .
+git commit                    # 完成合併提交</code></pre>
+          </div>
+          <ul class="tips">
+            <li><strong>合併策略：</strong>預設為 recursive；可視情況改 fast-forward 或 no-ff。</li>
+            <li><strong>替代：</strong>用 <code>rebase</code> 可得到更線性的歷史，但需注意共享分支風險。</li>
+          </ul>
+        </details>
+      </article>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>Made with 💜 &nbsp;|&nbsp; 可愛但專業的 Git 入門網頁</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
